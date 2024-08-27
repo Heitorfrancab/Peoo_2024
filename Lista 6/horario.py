@@ -5,12 +5,22 @@ class Horario:
   def __init__(self, id, de, da, c, idc, ids):
     self.id = id
     self.descricao = de
-    self.date = datetime.strptime(da, "%d/%m/%Y")
+    self.date = datetime.strptime(da, "%d/%m/%Y %H:%M")
     self.confirmed = c
     self.idc = idc
     self.ids = ids
   def __str__(self):
     return f"{self.id} - {self.descricao} - {self.date} - {self.confirmed} - {self.idc} - {self.ids}"
+  def to_json(self):
+    dic = {}
+    dic["id"] = self.id
+    dic["descricao"] = self.descricao
+    dic["date"] = datetime.strftime(self.date, "%d/%m/%Y %H:%M")
+    dic["confirmed"] = self.confirmed
+    dic["idc"] = self.idc
+    dic["ids"] = self.ids
+
+    return(dic)
 
 class Horarios:
   horarios = []
@@ -54,16 +64,16 @@ class Horarios:
     return cls.horarios
   @classmethod
   def salvar(cls):
-    with open("horarios.json", mode="w") as arquivo:   # w - write
-      json.dump(cls.horarios, arquivo, default = vars)
+    with open("horarios.json", mode="w") as arquivo:
+      json.dump(cls.horarios, arquivo, default = Horario.to_json)
   @classmethod
   def abrir(cls):
     cls.horarios = []
     try:
-      with open("horarios.json", mode="r") as arquivo:   # r - read
+      with open("horarios.json", mode="r") as arquivo:
         texto = json.load(arquivo)
         for obj in texto:   
-          h = Horario(obj["id"], obj["de"], obj["da"], obj["c"], obj["idc"], obj["ids"])
+          h = Horario(obj["id"], obj["de"], datetime.strptime(obj["date"], "%d/%m/%Y %H:%M"), obj["c"], obj["idc"], obj["ids"])
           cls.horarios.append(h)
     except FileNotFoundError:
       pass

@@ -1,3 +1,4 @@
+
 from cliente import *
 from horario import *
 from servico import *
@@ -61,7 +62,7 @@ class UI:
   def horario_inserir():
     #id = int(input("Informe o id: "))
     de = input("Informe a descrição: ")
-    da = input("Informe a data (dd/mm/aaaa): ")
+    da = input("Informe a data (dd/mm/aaaa hh:mm): ")
     c = True
     idc = input("Informe o identificador do cliente: ")
     ids = input("Informe o identificador do serviço: ")
