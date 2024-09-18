@@ -2,12 +2,14 @@ import json
 from estado import *
 
 class Cidade:
-  def __init__(self, id, nome, idestado):
+  def __init__(self, id, nome, naturalidade, populacao, idestado):
     self.id = id
     self.nome = nome
+    self.natu = naturalidade
+    self.popu = populacao
     self.idestado = idestado
   def __str__(self):
-    return f"ID cidade - {self.id},  Nome cidade - {self.nome}, ID estado - {self.idestado}"
+    return f"ID da cidade: {self.id} - Nome da cidade: {self.nome} - Naturalidade da cidade: {self.natu} - População da cidade: {self.popu} - ID do estado: {self.idestado}"
 
 class Cidades:
   objetos = []
@@ -34,6 +36,8 @@ class Cidades:
     c = cls.listar_id(obj.id)
     if c != None:
       c.nome = obj.nome
+      c.natu = obj.natu
+      c.popu = obj.popu
       c.idestado = obj.idestado
       cls.salvar()
 
@@ -61,7 +65,7 @@ class Cidades:
       with open("cidades.json", mode="r") as arquivo:   
         texto = json.load(arquivo)
         for obj in texto:   
-          c = Cidade(obj["id"], obj["nome"], obj["idestado"])
+          c = Cidade(obj["id"], obj["nome"], obj["natu"], obj["popu"], obj["idestado"])
           cls.objetos.append(c)
     except FileNotFoundError:
       pass

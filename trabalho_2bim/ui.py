@@ -68,9 +68,11 @@ class UI:
     try:
         nome = input("Informe o nome: ")
         abreviacao = input("Informe a abreviação: ")
+        naturalidade = input("Informe a naturalidade: ")
+        populacao = input("Informe a população: ")
         UI.pais_listar()
         idpais = int(input("Qual o id do país que está este estado? (responda somente com o número)"))
-        views.estado_inserir(nome, abreviacao, idpais)
+        views.estado_inserir(nome, abreviacao, naturalidade, populacao, idpais)
     except Exception as e:
         print(f"Ocorreu um erro ao inserir o estado: {e}")
 
@@ -85,9 +87,11 @@ class UI:
     id = int(input("Informe o id do estado a ser atualizado: "))
     nome = input("Informe o novo nome: ")
     abreviacao = input("Informe a nova abreviação: ")
+    naturalidade = input("Informe a nova naturalidade: ")
+    populacao = input("Informe a nova população: ")
     UI.pais_listar
     idpais = input("Informe o novo id do país deste estado: ")
-    views.estado_atualizar(id, nome, abreviacao, idpais)
+    views.estado_atualizar(id, nome, abreviacao, naturalidade, populacao, idpais)
 
   @staticmethod
   def estado_excluir():
@@ -98,9 +102,11 @@ class UI:
   @staticmethod
   def cidade_inserir():
     nome = input("Informe o nome: ")
+    naturalidade = input("Informe a naturalidade: ")
+    populacao = input("Informe a população: ")
     UI.estado_listar()
     idestado = int(input("Qual o id do estado que está esta cidade? (responda somente com o número): "  ))
-    views.cidade_inserir(nome, idestado)
+    views.cidade_inserir(nome, naturalidade, populacao, idestado)
 
   @staticmethod
   def cidade_listar():  
@@ -112,9 +118,11 @@ class UI:
     UI.cidade_listar()
     id = int(input("Informe o id da cidade a ser atualizado: "))
     nome = input("Informe o novo nome: ")
+    naturalidade = input("Informe a nova naturalidade: ")
+    populacao = input("Informe a nova população: ")
     UI.estado_listar
     idestado = input("Informe o novo id do estado desta cidade: ")
-    views.cidade_atualizar(id, nome, idestado)
+    views.cidade_atualizar(id, nome, naturalidade, populacao, idestado)
 
   @staticmethod
   def cidade_excluir():

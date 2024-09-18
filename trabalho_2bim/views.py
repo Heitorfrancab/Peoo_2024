@@ -21,35 +21,35 @@ def pais_excluir(id):
 
 # Estado:
 
-def estado_inserir(nome, abreviacao, idpais):
-    c = Estado(0, nome, abreviacao, idpais)
+def estado_inserir(nome, abreviacao, naturalidade, populacao, idpais):
+    c = Estado(0, nome, abreviacao, naturalidade, populacao, idpais)
     Estados.inserir(c)
     
 
 def estado_listar():
     return Estados.listar()    
 
-def estado_atualizar(id, nome, abreviacao, idpais):
-    c = Estado(id, nome, abreviacao, idpais)
+def estado_atualizar(id, nome, abreviacao, naturalidade, populacao, idpais):
+    c = Estado(id, nome, abreviacao, naturalidade, populacao, idpais)
     Estados.atualizar(c)
 
 def estado_excluir(id):
-    c = Estado(id, "", "", "")
+    c = Estado(id, "", "", "", "", "")
     Estados.excluir(c)   
 
 # Cidades
 
-def cidade_inserir(nome, idestado):
-    c = Cidade(0, nome, idestado)
+def cidade_inserir(nome, naturalidade, populacao, idestado):
+    c = Cidade(0, nome, naturalidade, populacao, idestado)
     Cidades.inserir(c)
 
 def cidade_listar():
     return Cidades.listar()    
 
-def cidade_atualizar(id, nome, idestado):
-    c = Cidade(id, nome, idestado)
+def cidade_atualizar(id, nome, naturalidade, populacao, idestado):
+    c = Cidade(id, nome, naturalidade, populacao, idestado)
     Cidades.atualizar(c)
 
 def cidade_excluir(id):
-    c = Cidade(id, "", "")
+    c = Cidade(id, "", "", "", "")
     Cidades.excluir(c)
