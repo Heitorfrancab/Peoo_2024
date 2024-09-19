@@ -1,4 +1,4 @@
-import views
+from views import *
 
 class UI:
   @staticmethod
@@ -39,11 +39,11 @@ class UI:
     moeda = input("Informe a moeda: ")
     populacao = int(input("Informe a população: "))
     nacionalidade = input("Informe a nacionalidade: ")
-    views.pais_inserir(nome, abreviacao, moeda, populacao, nacionalidade)
+    View.pais_inserir(nome, abreviacao, moeda, populacao, nacionalidade)
 
   @staticmethod
   def pais_listar():  
-    for c in views.pais_listar():
+    for c in View.pais_listar():
       print(c)
     
   @staticmethod
@@ -55,13 +55,13 @@ class UI:
     moeda = input("Informe a nova moeda: ")
     populacao = int(input("Informe a nova população: "))
     nascionalidade = input("Informe a nova nascionalidade: ")
-    views.pais_atualizar(id, nome, abreviacao, moeda, populacao, nascionalidade)
+    View.pais_atualizar(id, nome, abreviacao, moeda, populacao, nascionalidade)
 
   @staticmethod
   def pais_excluir():
     UI.pais_listar()
     id = int(input("Informe o id do país a ser excluído: "))
-    views.pais_excluir(id)
+    View.pais_excluir(id)
 
   @staticmethod
   def estado_inserir():
@@ -72,13 +72,13 @@ class UI:
         populacao = input("Informe a população: ")
         UI.pais_listar()
         idpais = int(input("Qual o id do país que está este estado? (responda somente com o número)"))
-        views.estado_inserir(nome, abreviacao, naturalidade, populacao, idpais)
+        View.estado_inserir(nome, abreviacao, naturalidade, populacao, idpais)
     except Exception as e:
         print(f"Ocorreu um erro ao inserir o estado: {e}")
 
   @staticmethod
   def estado_listar():  
-    for c in views.estado_listar():
+    for c in View.estado_listar():
       print(c)
 
   @staticmethod
@@ -91,13 +91,13 @@ class UI:
     populacao = input("Informe a nova população: ")
     UI.pais_listar
     idpais = input("Informe o novo id do país deste estado: ")
-    views.estado_atualizar(id, nome, abreviacao, naturalidade, populacao, idpais)
+    View.estado_atualizar(id, nome, abreviacao, naturalidade, populacao, idpais)
 
   @staticmethod
   def estado_excluir():
     UI.estado_listar()
     id = int(input("Informe o id do estado a ser excluído: "))
-    views.estado_excluir(id)
+    View.estado_excluir(id)
 
   @staticmethod
   def cidade_inserir():
@@ -106,11 +106,11 @@ class UI:
     populacao = input("Informe a população: ")
     UI.estado_listar()
     idestado = int(input("Qual o id do estado que está esta cidade? (responda somente com o número): "  ))
-    views.cidade_inserir(nome, naturalidade, populacao, idestado)
+    View.cidade_inserir(nome, naturalidade, populacao, idestado)
 
   @staticmethod
   def cidade_listar():  
-    for c in views.cidade_listar():
+    for c in View.cidade_listar():
       print(c)
 
   @staticmethod
@@ -122,11 +122,11 @@ class UI:
     populacao = input("Informe a nova população: ")
     UI.estado_listar
     idestado = input("Informe o novo id do estado desta cidade: ")
-    views.cidade_atualizar(id, nome, naturalidade, populacao, idestado)
+    View.cidade_atualizar(id, nome, naturalidade, populacao, idestado)
 
   @staticmethod
   def cidade_excluir():
     UI.cidade_listar()
     id = int(input("Informe o id da cidade a ser excluído: "))
-    views.cidade_excluir(id)
+    View.cidade_excluir(id)
 UI.main()
