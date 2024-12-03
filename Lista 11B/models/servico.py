@@ -3,37 +3,12 @@ import json
 # Modelo
 class Servico:
   def __init__(self, id, descricao, valor, duracao):
-    self.__id = id
-    self.__descricao = descricao
-    self.__valor = valor
-    self.__duracao = duracao
-
-    self.setid()
-    self.setdescricao()
-    self.setvalor()
-    self.setduracao()
-  def setid(self):
-    if self.__id < 0:
-      raise ValueError("Id inválido. ")
-  def setdescricao(self):
-    if self.__descricao == "" or self.__descricao == " ":
-      raise ValueError("Parâmetro de descrição vazio. ")
-  def setvalor(self):
-    if self.__valor < 0:
-      raise ValueError("Valor inválido. ")
-  def setduracao(self):
-    if self._duracao < 0:
-      raise ValueError("Duração inválida. ")
-  def getid(self):
-    return self.__id
-  def getdescricao(self):
-    return self.__descricao
-  def getvalor(self):
-    return self.__valor
-  def getduracao(self):
-    return self.__duracao
+    self.id = id
+    self.descricao = descricao
+    self.valor = valor
+    self.duracao = duracao
   def __str__(self):
-    return f"{self.__id} - {self.__descricao} - R$ {self.__valor:.2f} - {self.__duracao} min"
+    return f"{self.id} - {self.descricao} - R$ {self.valor:.2f} - {self.duracao} min"
 
 # Persistência
 class Servicos:
@@ -44,8 +19,8 @@ class Servicos:
     cls.abrir()
     m = 0
     for c in cls.objetos:
-      if c.__id > m: m = c.__id
-    obj.__id = m + 1
+      if c.id > m: m = c.id
+    obj.id = m + 1
     cls.objetos.append(obj)
     cls.salvar()
 
@@ -53,21 +28,21 @@ class Servicos:
   def listar_id(cls, id):
     cls.abrir()
     for c in cls.objetos:
-      if c.__id == id: return c
+      if c.id == id: return c
     return None  
   
   @classmethod
   def atualizar(cls, obj):
-    c = cls.listar_id(obj.__id)
+    c = cls.listar_id(obj.id)
     if c != None:
-      c.__descricao = obj.__descricao
-      c.__valor = obj.__valor
-      c.__duracao = obj.__duracao
+      c.descricao = obj.descricao
+      c.valor = obj.valor
+      c.duracao = obj.duracao
       cls.salvar()
 
   @classmethod
   def excluir(cls, obj):
-    c = cls.listar_id(obj.__id)
+    c = cls.listar_id(obj.id)
     if c != None:
       cls.objetos.remove(c)
       cls.salvar()
@@ -93,3 +68,4 @@ class Servicos:
           cls.objetos.append(c)
     except FileNotFoundError:
       pass
+

@@ -1,26 +1,17 @@
 from models.cliente import Cliente, Clientes
 from models.horario import Horario, Horarios
 from models.servico import Servico, Servicos
-from models.profissional import Profissional, Profissionais
 from datetime import datetime, timedelta
 
 class View:
     def cliente_admin():
         for c in View.cliente_listar():
-            if c.__email == "admin": return
+            if c.email == "admin": return
         View.cliente_inserir("admin", "admin", "1234", "1234")
 
     def cliente_inserir(nome, email, fone, senha):
-        c = Cliente(0, nome, email, fone, senha)  
-        igual = False
-        for x in Clientes:
-            if c.__email == x.__email:
-                igual = True
-                break
-        if igual == False:
-            Clientes.inserir(c)
-        else:
-            raise ValueError("Email em uso. ")
+        c = Cliente(0, nome, email, fone, senha)
+        Clientes.inserir(c)
 
     def cliente_listar():
         return Clientes.listar()    
@@ -30,59 +21,24 @@ class View:
 
     def cliente_atualizar(id, nome, email, fone, senha):
         c = Cliente(id, nome, email, fone, senha)
-        igual = False
-        for x in Clientes:
-            if c.__email == x.__email:
-                igual = True
-                break
-        if igual == False:
-            Clientes.atualizar(c)
-        else:
-            raise ValueError("Email em uso. ")
+        Clientes.atualizar(c)
 
     def cliente_excluir(id):
-        igual = False
-        for x in Horarios:
-            if x.__id_cliente == id:
-                igual = True
-                break
-        if igual == False:
-            c = Cliente(id, "", "", "", "")
-            Clientes.excluir(c)    
-        else:
-            raise ValueError("O cliente possui horário. ")
+        c = Cliente(id, "", "", "", "")
+        Clientes.excluir(c)    
 
     def cliente_autenticar(email, senha):
         for c in View.cliente_listar():
-            if c.__email == email and c.senha == senha:
+            if c.email == email and c.senha == senha:
                 return {"id" : c.id, "nome" : c.nome }
         return None
 
     def horario_inserir(data, confirmado, id_cliente, id_servico):
         c = Horario(0, data)
-        c.__confirmado = confirmado
-        c.__id_cliente = id_cliente
-        c.__id_servico = id_servico
-        
-        clienteverdadeiro = False
-        for x in Clientes:
-            if c.__id_cliente == x.__id:
-                clienteverdadeiro = True
-                break
-        servicoverdadeiro = False
-        for x in Servicos:
-            if c.__id_cliente == x.__id:
-                servicoverdadeiro = True
-                break
-        
-        if clienteverdadeiro == True and servicoverdadeiro == True:
-            Horarios.inserir(c)
-        elif clienteverdadeiro == False and servicoverdadeiro == True:
-            raise ValueError("Não há cliente com o id inserido. ")
-        elif clienteverdadeiro == True and servicoverdadeiro == False:
-            raise ValueError("Não há serviço com o id inserido. ")
-        else:
-            raise ValueError("Não há cliente com o id insirido nem há serviço com o id inserido. ")
+        c.confirmado = confirmado
+        c.id_cliente = id_cliente
+        c.id_servico = id_servico
+        Horarios.inserir(c)
 
     def horario_listar():
         return Horarios.listar()    
@@ -91,48 +47,19 @@ class View:
         horarios = View.horario_listar()
         disponiveis = []
         for h in horarios:
-            if h.__data >= datetime.now() and h.__id_cliente == None: disponiveis.append(h)
+            if h.data >= datetime.now() and h.id_cliente == None: disponiveis.append(h)
         return disponiveis   
 
     def horario_atualizar(id, data, confirmado, id_cliente, id_servico):
         c = Horario(id, data)
-        c.__confirmado = confirmado
-        c.__id_cliente = id_cliente
-        c.__id_servico = id_servico
-        
-        clienteverdadeiro = False
-        for x in Clientes:
-            if c.__id_cliente == x.__id:
-                clienteverdadeiro = True
-                break
-        servicoverdadeiro = False
-        for x in Servicos:
-            if c.__id_cliente == x.__id:
-                servicoverdadeiro = True
-                break
-        
-        if clienteverdadeiro == True and servicoverdadeiro == True:
-            Horarios.atualizar(c)
-        elif clienteverdadeiro == False and servicoverdadeiro == True:
-            raise ValueError("Não há cliente com o id inserido. ")
-        elif clienteverdadeiro == True and servicoverdadeiro == False:
-            raise ValueError("Não há serviço com o id inserido. ")
-        else:
-            raise ValueError("Não há cliente com o id insirido nem há serviço com o id inserido. ")
+        c.confirmado = confirmado
+        c.id_cliente = id_cliente
+        c.id_servico = id_servico
+        Horarios.atualizar(c)
 
     def horario_excluir(id):
-        igual = False
-        for x in Horarios:
-            if x.__id == id:
-                igual = True
-                break
-        if igual == False:
-            c = Horario(id, None)
-            Horarios.excluir(c)       
-        else:
-            raise ValueError("Horario em uso na agenda. ")
-        
-         
+        c = Horario(id, None)
+        Horarios.excluir(c)    
 
     def horario_abrir_agenda(data, hora_inicio, hora_fim, intervalo):
         #data = "05/11/2024"
@@ -166,31 +93,5 @@ class View:
         Servicos.atualizar(c)
 
     def servico_excluir(id):
-        igual = False
-        for x in Horarios:
-            if x.__id_servico == id:
-                igual = True
-                break
-        if igual == False:
-            c = Servico(id, "", 0, 0)
-            Servicos.excluir(c)    
-        else:
-            raise ValueError("Serviço em uso na agenda. ")
-
-    def profissional_inserir(nome, especialidade, conselho, email, senha):
-        c = Profissional(0, nome, especialidade, conselho, email, senha)
-        Profissionais.inserir(c)
-
-    def profissional_listar():
-        return Profissionais.listar()    
-
-    def profissional_listar_id(id):
-        return Profissionais.listar_id(id)    
-
-    def profissional_atualizar(id, nome, especialidade, conselho, email, senha):
-        c = Profissional(id, nome, especialidade, conselho, email, senha)
-        Profissionais.atualizar(c)
-
-    def profissional_excluir(id):
-        c = Profissional(id, "", "", "", "", "")
-        Profissionais.excluir(c)    
+        c = Servico(id, "", 0, 0)
+        Servicos.excluir(c)    

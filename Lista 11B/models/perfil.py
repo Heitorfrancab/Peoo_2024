@@ -3,24 +3,12 @@ import json
 # Modelo
 class Perfil:
   def __init__(self, id, nome, descricao, beneficio):
-    self.__id = id
-    self.__nome = nome
-    self.__descricao = descricao
-    self.__beneficio = beneficio
-  def setid(self):
-    if self.__id < 0:
-      raise ValueError("Id inválido. ")
-  def setnome(self):
-    if self.__nome == "" or self.__nome == " ":
-      raise ValueError("Parâmetro de nome vazio. ")
-  def setdescricao(self):
-    if self.__descricao == "" or self.__descricao == " ":
-      raise ValueError("Parâmetro de descrição vazio. ")
-  def setsenha(self):
-    if self.__beneficio == "" or self.__beneficio == " ":
-      raise ValueError("Parâmetro de benefício vazio. ")
+    self.id = id
+    self.nome = nome
+    self.descricao = descricao
+    self.beneficio = beneficio
   def __str__(self):
-    return f"{self.__nome} - {self.__descricao} - {self.__beneficio}"
+    return f"{self.nome} - {self.descricao} - {self.beneficio}"
 
 # Persistência
 class Perfis:
@@ -31,8 +19,8 @@ class Perfis:
     cls.abrir()
     m = 0
     for c in cls.objetos:
-      if c.__id > m: m = c.__id
-    obj.__id = m + 1
+      if c.id > m: m = c.id
+    obj.id = m + 1
     cls.objetos.append(obj)
     cls.salvar()
 
@@ -40,16 +28,16 @@ class Perfis:
   def listar_id(cls, id):
     cls.abrir()
     for c in cls.objetos:
-      if c.__id == id: return c
+      if c.id == id: return c
     return None  
   
   @classmethod
   def atualizar(cls, obj):
     c = cls.listar_id(obj.id)
     if c != None:
-      c.__nome = obj.__nome
-      c.__descricao = obj.__descricao
-      c.__beneficio = obj.__beneficio
+      c.nome = obj.nome
+      c.descricao = obj.descricao
+      c.beneficio = obj.beneficio
       cls.salvar()
 
   @classmethod

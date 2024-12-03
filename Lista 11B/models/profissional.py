@@ -3,51 +3,14 @@ import json
 # Modelo
 class Profissional:
   def __init__(self, id, nome, especialidade, conselho, email, senha):
-    self.__id = id
-    self.__nome = nome
-    self.__especialidade = especialidade
-    self.__conselho = conselho
-    self.__email = email
-    self.__senha = senha
-
-    self.setid()
-    self.setnome()
-    self.setespecialidade()
-    self.setconselho()
-    self.setemail()
-    self.setsenha()
-  def setid(self):
-    if self.__id < 0:
-      raise ValueError("Id inválido. ")
-  def setnome(self):
-    if self.__nome == "" or self.__nome == " ":
-      raise ValueError("Parâmetro de nome vazio. ")
-  def setespecialidade(self):
-    if self.__especialidade == "" or self.__especialidade == " ":
-      raise ValueError("Parâmetro de identificador de especialidade vazio. ")
-  def setconselho(self):
-    if self.__conselho == "" or self.__conselho == " ":
-      raise ValueError("Parâmetro de identificador de conselho vazio. ")
-  def setemail(self):
-    if self.__email == "" or self.__email == " ":
-      raise ValueError("Parâmetro de identificador de email vazio. ")
-  def setsenha(self):
-    if self.__senha == "" or self.__senha == " ":
-      raise ValueError("Parâmetro de identificador de profissional vazio. ")
-  def getid(self):
-    return self.__id
-  def getnome(self):
-    return self.__nome
-  def getidespecialidade(self):
-    return self.__especialidade
-  def getconselho(self):
-    return self.__conselho
-  def getidemail(self):
-    return self.__email
-  def getsenha(self):
-    return self.__senha
+    self.id = id
+    self.nome = nome
+    self.especialidade = especialidade
+    self.conselho = conselho
+    self.email = email
+    self.senha = senha
   def __str__(self):
-    return f"{self.__nome} - {self.__especialidade} - {self.__conselho}"
+    return f"{self.nome} - {self.especialidade} - {self.conselho}"
 
 # Persistência
 class Profissionais:
@@ -58,8 +21,8 @@ class Profissionais:
     cls.abrir()
     m = 0
     for c in cls.objetos:
-      if c.__id > m: m = c.__id
-    obj.__id = m + 1
+      if c.id > m: m = c.id
+    obj.id = m + 1
     cls.objetos.append(obj)
     cls.salvar()
 
@@ -67,18 +30,18 @@ class Profissionais:
   def listar_id(cls, id):
     cls.abrir()
     for c in cls.objetos:
-      if c.__id == id: return c
+      if c.id == id: return c
     return None  
   
   @classmethod
   def atualizar(cls, obj):
     c = cls.listar_id(obj.id)
     if c != None:
-      c.__nome = obj.__nome
-      c.__especialidade = obj.__especialidade
-      c.__conselho = obj.__conselho
-      c.__email = obj.__email
-      c.__senha = obj.__senha
+      c.nome = obj.nome
+      c.especialidade = obj.especialidade
+      c.conselho = obj.conselho
+      c.email = obj.email
+      c.senha = obj.senha
       cls.salvar()
 
   @classmethod
