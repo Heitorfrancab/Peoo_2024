@@ -1,4 +1,5 @@
 import json
+from models.crud import *
 
 # Modelo
 class Perfil:
@@ -11,25 +12,7 @@ class Perfil:
     return f"{self.nome} - {self.descricao} - {self.beneficio}"
 
 # Persistência
-class Perfis:
-  objetos = []    # atributo estático
-
-  @classmethod
-  def inserir(cls, obj):
-    cls.abrir()
-    m = 0
-    for c in cls.objetos:
-      if c.id > m: m = c.id
-    obj.id = m + 1
-    cls.objetos.append(obj)
-    cls.salvar()
-
-  @classmethod
-  def listar_id(cls, id):
-    cls.abrir()
-    for c in cls.objetos:
-      if c.id == id: return c
-    return None  
+class Perfis (CRUD):
   
   @classmethod
   def atualizar(cls, obj):
@@ -39,19 +22,6 @@ class Perfis:
       c.descricao = obj.descricao
       c.beneficio = obj.beneficio
       cls.salvar()
-
-  @classmethod
-  def excluir(cls, obj):
-    c = cls.listar_id(obj.id)
-    if c != None:
-      cls.objetos.remove(c)
-      cls.salvar()
-  
-  @classmethod
-  def listar(cls):
-    cls.abrir()
-    cls.objetos.sort(key=lambda Perfil: Perfil.nome)
-    return cls.objetos
 
   @classmethod
   def salvar(cls):

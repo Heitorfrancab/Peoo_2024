@@ -28,8 +28,9 @@ class ManterClienteUI:
         email = st.text_input("Informe o e-mail")
         fone = st.text_input("Informe o fone")
         senha = st.text_input("Informe a senha", type="password")
+        perfil = View.perfil_listar()
         if st.button("Inserir"):
-            View.cliente_inserir(nome, email, fone, senha)
+            View.cliente_inserir(nome, email, fone, senha, perfil.id)
             st.success("Cliente inserido com sucesso")
             time.sleep(2)
             st.rerun()
@@ -44,8 +45,9 @@ class ManterClienteUI:
             email = st.text_input("Informe o novo e-mail", op.email)
             fone = st.text_input("Informe o novo fone", op.fone)
             senha = st.text_input("Informe a nova senha", op.senha, type="password")
+            perfil = View.perfil_listar()
             if st.button("Atualizar"):
-                View.cliente_atualizar(op.id, nome, email, fone, senha)
+                View.cliente_atualizar(op.id, nome, email, fone, senha, perfil.id)
                 st.success("Cliente atualizado com sucesso")
                 time.sleep(2)
                 st.rerun()

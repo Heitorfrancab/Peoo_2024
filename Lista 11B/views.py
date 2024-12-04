@@ -1,16 +1,18 @@
 from models.cliente import Cliente, Clientes
 from models.horario import Horario, Horarios
 from models.servico import Servico, Servicos
+from models.perfil import Perfil, Perfis
+from models.profissional import Profissional, Profissionais
 from datetime import datetime, timedelta
 
 class View:
     def cliente_admin():
         for c in View.cliente_listar():
             if c.email == "admin": return
-        View.cliente_inserir("admin", "admin", "1234", "1234")
+        View.cliente_inserir("admin", "admin", "1234", "1234", 0)
 
-    def cliente_inserir(nome, email, fone, senha):
-        c = Cliente(0, nome, email, fone, senha)
+    def cliente_inserir(nome, email, fone, senha, idperfil):
+        c = Cliente(0, nome, email, fone, senha, idperfil)
         Clientes.inserir(c)
 
     def cliente_listar():
@@ -19,12 +21,12 @@ class View:
     def cliente_listar_id(id):
         return Clientes.listar_id(id)    
 
-    def cliente_atualizar(id, nome, email, fone, senha):
-        c = Cliente(id, nome, email, fone, senha)
+    def cliente_atualizar(id, nome, email, fone, senha, idperfil):
+        c = Cliente(id, nome, email, fone, senha, idperfil)
         Clientes.atualizar(c)
 
     def cliente_excluir(id):
-        c = Cliente(id, "", "", "", "")
+        c = Cliente(id, "", "", "", "", "")
         Clientes.excluir(c)    
 
     def cliente_autenticar(email, senha):
@@ -33,6 +35,24 @@ class View:
                 return {"id" : c.id, "nome" : c.nome }
         return None
 
+    def perfil_inserir(nome, descricao, beneficio):
+        c = Perfil(0, nome, descricao, beneficio)
+        Perfis.inserir(c)
+    
+    def perfil_listar():
+        return Perfis.listar()
+    
+    def perfil_listar_id(id):
+        return Perfis.listar_id(id)
+
+    def perfil_atualizar(id, nome, descricao, beneficio):
+        c = Perfil(id, nome, descricao, beneficio)
+        Perfis.atualizar(c)
+
+    def perfil_excluir():
+        c = Perfil(id, "", "", "")
+        Perfis.excluir(c)
+    
     def horario_inserir(data, confirmado, id_cliente, id_servico):
         c = Horario(0, data)
         c.confirmado = confirmado
@@ -95,3 +115,21 @@ class View:
     def servico_excluir(id):
         c = Servico(id, "", 0, 0)
         Servicos.excluir(c)    
+
+    def profissional_inserir(nome, especialidade, conselho):
+        c = Profissional(0, nome, especialidade, conselho)
+        Profissionais.inserir(c)
+
+    def profissional_listar():
+        return Profissionais.listar()    
+
+    def profissional_listar_id(id):
+        return Profissionais.listar_id(id)    
+
+    def profissional_atualizar(id, nome, especialidade, conselho):
+        c = Profissional(id, nome, especialidade, conselho)
+        Profissionais.atualizar(c)
+
+    def profissional_excluir(id):
+        c = Profissional(id, "", "", "")
+        Profissionais.excluir(c)    
