@@ -8,6 +8,8 @@ class Pais:
         self.__populacao = populacao
         self.__capitalid = capital
         self.__cod = cod
+    def set_id(self, id):
+        self.__id = id
     def get_id(self):
         return self.__id
     def get_nome(self):

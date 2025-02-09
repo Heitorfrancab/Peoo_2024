@@ -5,6 +5,8 @@ class Cidade:
         self.__nat = nat
         self.__populacao = populacao
         self.__idestado = idestado
+    def set_id(self, id):
+        self.__id = id
     def get_id(self):
         return self.__id
     def get_nome(self):

@@ -8,8 +8,8 @@ class CRUD:
     cls.abrir()
     m = 0
     for c in cls.objetos:
-      if c.get_id() > m: m = c.get_id()
-    obj.id = m + 1
+      if c.get_id() >= m: m = c.get_id()
+    obj.set_id(m + 1)
     cls.objetos.append(obj)
     cls.salvar()
 

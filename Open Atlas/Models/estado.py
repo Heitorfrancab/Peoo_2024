@@ -6,6 +6,8 @@ class Estado:
         self.__nat = nat
         self.__populacao = populacao
         self.__idpais = idpais
+    def set_id(self, id):
+        self.__id = id
     def get_id(self):
         return self.__id
     def get_nome(self):

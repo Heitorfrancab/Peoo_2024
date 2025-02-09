@@ -4,6 +4,8 @@ class Usuario:
         self.__email = email
         self.__nome = nome
         self.__senha = senha
+    def set_id(self, id):
+        self.__id = id
     def get_id(self):
         return self.__id
     def get_email(self):
