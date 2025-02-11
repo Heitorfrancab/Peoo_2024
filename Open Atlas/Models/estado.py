@@ -27,28 +27,6 @@ class Estado:
 
 #Persistência
 class estados (CRUD):
-    objetos = []
-
-    @classmethod
-    def inserir(cls, obj):
-        return super().inserir(obj)
-    
-    @classmethod
-    def listar_id(cls, id):
-        return super().listar_id(id)
-    
-    @classmethod
-    def atualizar(cls, obj):
-        return super().atualizar(obj)
-    
-    @classmethod
-    def excluir(cls, obj):
-        return super().excluir(obj)
-    
-    @classmethod
-    def listar(cls):
-        return super().listar()
-
     @classmethod
     def salvar(cls):
         with open("estados.json", mode="w") as arquivo:   # w - write

@@ -1,3 +1,4 @@
+from abc import abstractmethod
 import json
 
 class CRUD:
@@ -41,12 +42,12 @@ class CRUD:
     cls.objetos.sort(key=lambda obj: obj.get_id())
     return cls.objetos
 
-  @classmethod
+  @abstractmethod
   def salvar(cls):
     with open("crud.json", mode="w") as arquivo:   # w - write
       json.dump(cls.objetos, arquivo, default = vars)
 
-  @classmethod
+  @abstractmethod
   def abrir(cls):
     cls.objetos = []
     try:
