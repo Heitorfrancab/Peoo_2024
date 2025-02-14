@@ -20,7 +20,7 @@ class Usuario:
         return self.__senha
 
 #Persistência
-class estados (CRUD):
+class Usuarios (CRUD):
     @classmethod
     def salvar(cls):
         with open("usuarios.json", mode="w") as arquivo:   # w - write

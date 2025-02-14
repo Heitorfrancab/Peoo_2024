@@ -27,7 +27,7 @@ import json
 from crud import CRUD
 
 
-class cidades (CRUD):
+class Cidades (CRUD):
     @classmethod
     def salvar(cls):
         with open("cidades.json", mode="w") as arquivo:   # w - write

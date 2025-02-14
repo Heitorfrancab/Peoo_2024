@@ -26,7 +26,7 @@ class Estado:
         return self.__idpais
 
 #Persistência
-class estados (CRUD):
+class Estados (CRUD):
     @classmethod
     def salvar(cls):
         with open("estados.json", mode="w") as arquivo:   # w - write
