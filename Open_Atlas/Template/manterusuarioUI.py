@@ -15,7 +15,7 @@ class ManterUsuarioUI:
         with tab4: ManterUsuarioUI.excluir()
 
     def listar():
-        Usuarios = View.Usuario_listar()
+        Usuarios = View.usuario_listar()
         if len(Usuarios) == 0: 
             st.write("Nenhum Usuario cadastrado")
         else:    
@@ -44,7 +44,7 @@ class ManterUsuarioUI:
                 st.rerun()
 
     def atualizar():
-        Usuarios = View.Usuario_listar()
+        Usuarios = View.usuario_listar()
         if len(Usuarios) == 0: 
             st.write("Nenhum Usuario cadastrado")
         else:

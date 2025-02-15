@@ -1,5 +1,12 @@
 from Template.loginUI import *
 from Template.abrircontaUI import *
+from Template.ManterUsuarioUI import *
+from Template.ManterCidadeUI import *
+from Template.ManterEstadoUI import *
+from Template.ManterPaisUI import *
+from Template.VisualizarCidadesUI import *
+from Template.VisualizarEstadosUI import *
+from Template.VisualizarPaisesUI import *
 from views import *
 
 import streamlit as st
@@ -11,41 +18,42 @@ class IndexUI:
         if op == "Abrir Conta": AbrirContaUI.main()
                
     def menu_admin():            
-        op = st.sidebar.selectbox("Menu", ["Cadastro de Clientes", "Cadastro de Horários", "Cadastro de Profissionais", "Cadastro de Serviços", "Abrir Agenda do Dia"])
-        if op == "Cadastro de Clientes": ManterClienteUI.main()
-        if op == "Cadastro de Horários": ManterHorarioUI.main()
-        if op == "Cadastro de Profissionais": ManterProfissionalUI.main()
-        if op == "Cadastro de Serviços": ManterServicoUI.main()
-        if op == "Abrir Agenda do Dia": AbrirAgendaUI.main()
+        op = st.sidebar.selectbox("Menu", ["Cadastro de Usuario", "Cadastro de Cidades", "Cadastro de Estados", "Cadastro de Paises"])
+        if op == "Cadastro de Usuario": ManterUsuarioUI.main()
+        if op == "Cadastro de Cidades": ManterCidadeUI.main()
+        if op == "Cadastro de Estados": ManterEstadoUI.main()
+        if op == "Cadastro de Paises": ManterPaisUI.main()
 
-    def menu_cliente():
-        op = st.sidebar.selectbox("Menu", ["Horários Disponíveis"])
-        if op == "Horários Disponíveis": ListarHorarioUI.main()
+    def menu_Usuario():
+        op = st.sidebar.selectbox("Menu", ["Visualizar Cidades", "Visualizar Estados", "Visualizar Paises"])
+        if op == "Visualizar Cidades": VisualizarCidadesUI.main()
+        if op == "Visualizar Estados": VisualizarEstadosUI.main()
+        if op == "Visualizar Paises": VisualizarPaisesUI.main()
 
     def sair_do_sistema():
         if st.sidebar.button("Sair"):
-            del st.session_state["cliente_id"]
-            del st.session_state["cliente_nome"]
+            del st.session_state["id"]
+            del st.session_state["nome"]
             st.rerun()
     
     def sidebar():
-        if "cliente_id" not in st.session_state:
+        if "id" not in st.session_state:
             # usuário não está logado
             IndexUI.menu_visitante()   
         else:
             # usuário está logado, verifica se é o admin
-            admin = st.session_state["cliente_nome"] == "admin"
+            admin = st.session_state["nome"] == "admin"
             # mensagen de bem-vindo
-            st.sidebar.write("Bem-vindo(a), " + st.session_state["cliente_nome"])
+            st.sidebar.write("Bem-vindo(a), " + st.session_state["nome"])
             # menu do usuário
             if admin: IndexUI.menu_admin()
-            else: IndexUI.menu_cliente()
+            else: IndexUI.menu_Usuario()
             # controle de sair do sistema
             IndexUI.sair_do_sistema() 
     
     def main():
         # verifica a existe o usuário admin
-        View.cliente_admin()
+        View.usuario_admin()
         # monta o sidebar
         IndexUI.sidebar()
        

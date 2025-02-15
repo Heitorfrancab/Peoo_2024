@@ -18,13 +18,22 @@ class Usuario:
         return self.__nome
     def get_senha(self):
         return self.__senha
-
+    def __dict__(self):
+        {'ID' : self.__id, 'Email' : self.__email, 'Nome' : self.__nome}
+    def to_json(self):
+        return {
+            "id": self.get_id(),
+            "email": self.get_email(),
+            "nome": self.get_nome(),
+            "senha": self.get_senha(),
+        }
+    
 #Persistência
 class Usuarios (CRUD):
     @classmethod
     def salvar(cls):
         with open("usuarios.json", mode="w") as arquivo:   # w - write
-            json.dump(cls.objetos, arquivo, default = vars)
+            json.dump([obj.to_json() for obj in cls.objetos], arquivo, indent=4)
 
     @classmethod
     def abrir(cls):
@@ -33,7 +42,7 @@ class Usuarios (CRUD):
             with open("usuarios.json", mode="r") as arquivo:   # r - read
                 texto = json.load(arquivo)
                 for obj in texto:   
-                    c = Usuario(obj["_Usuario__id"], obj["_Usuario__email"], obj["_Usuario__nome"], obj["_Usuario__senha"])
+                    c = Usuario(obj["id"], obj["email"], obj["nome"], obj["senha"])
                     cls.objetos.append(c)
         except FileNotFoundError:
             pass

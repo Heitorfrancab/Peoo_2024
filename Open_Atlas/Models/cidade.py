@@ -21,10 +21,10 @@ class Cidade:
         return self.__populacao
     def get_idestado(self):
         return self.__idestado
+    def __dict__(self):
+        {'ID' : self.__id, 'Nome' : self.__nome, 'Naturalidade' : self.__nat, 'População' : self.__populacao, 'ID_estado': self.__idestado}
     
 #Persistência
-import json
-from crud import CRUD
 
 
 class Cidades (CRUD):

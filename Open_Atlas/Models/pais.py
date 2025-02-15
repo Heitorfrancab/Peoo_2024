@@ -29,6 +29,8 @@ class Pais:
         return self.__capitalid
     def get_cod(self):
         return self.__cod
+    def __dict__(self):
+        {'ID' : self.__id, 'Nome' : self.__nome, 'Abreviação' : self.__abrev, 'Nacionalidade' : self.__nac, 'Moeda' : self.__moeda, 'População' : self.__populacao, 'ID_Capital': self.__capitalid, 'Código de internet' : self.__cod}
     
 #Persistência
 
