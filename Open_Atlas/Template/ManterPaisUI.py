@@ -20,7 +20,7 @@ class ManterPaisUI:
             st.write("Nenhum país cadastrado")
         else:    
             dic = []
-            for obj in Paises: dic.append(obj.__dict__)
+            for obj in Paises: dic.append(obj.to_dict())
             df = pd.DataFrame(dic)
             st.dataframe(df)
 
@@ -40,27 +40,32 @@ class ManterPaisUI:
                 time.sleep(2)
                 st.rerun()
             else:
+                st.write(nome + abrev + nac + moeda + populacao + capital + cod)
                 View.pais_inserir(nome, abrev, nac, moeda, populacao, capital, cod)
                 st.success("País inserido com sucesso")
                 time.sleep(2)
-                st.rerun()
+                # st.rerun()
 
     def atualizar():
         Paises = View.pais_listar()
         if len(Paises) == 0: 
             st.write("Nenhum país cadastrado")
         else:
-            op = st.selectbox("Atualização de País", Paises)
-            nome = st.text_input("Informe o novo nome do País", op.get_nome())
-            abrev = st.text_input("Informe a nova abreviação do País", op.get_abrev())
-            nac = st.text_input("Informe a nova nacionlidade do País", op.get_nac())
-            moeda = st.text_input("Informe a nova moeda do País", op.get_moeda())
-            populacao = st.text_input("Informe a nova população do País", op.get_populacao())
-            capital = st.text_input("Informe o id da nova capital do País", op.get_capitalid())
-            cod = st.text_input("Informe o novo código de internet do País", op.get_cod())
+            dic = []
+            for obj in Paises: dic.append(obj.to_dict())
+
+            op = st.selectbox("Atualização de País", dic)
+            id = op['ID']
+            nome = st.text_input("Informe o novo nome do País", op['Nome'])
+            abrev = st.text_input("Informe a nova abreviação do País", op['Abreviação'])
+            nac = st.text_input("Informe a nova nacionlidade do País", op['Nacionalidade'])
+            moeda = st.text_input("Informe a nova moeda do País", op['Moeda'])
+            populacao = st.text_input("Informe a nova população do País", op['População'])
+            capital = st.text_input("Informe o id da nova capital do País", op['ID da capital'])
+            cod = st.text_input("Informe o novo código de internet do País", op['Código de internet'])
 
             if st.button("Atualizar"):
-                View.pais_atualizar(op.id, nome, abrev, nac, moeda, populacao, capital, cod)
+                View.pais_atualizar(id, nome, abrev, nac, moeda, populacao, capital, cod)
                 st.success("Pais atualizado com sucesso")
                 time.sleep(2)
                 st.rerun()
@@ -70,9 +75,11 @@ class ManterPaisUI:
         if len(Paises) == 0: 
             st.write("Nenhum país cadastrado")
         else:
-            op = st.selectbox("Exclusão de Pais", Paises)
+            dic = []
+            for obj in Paises: dic.append(obj.to_dict())
+            op = st.selectbox("Exclusão de Pais", dic)
             if st.button("Excluir"):
-                View.Pais_excluir(op.id)
+                View.pais_excluir(op['ID'])
                 st.success("Pais excluído com sucesso")
                 time.sleep(2)
                 st.rerun()

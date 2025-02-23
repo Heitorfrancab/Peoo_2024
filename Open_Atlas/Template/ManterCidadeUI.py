@@ -16,25 +16,31 @@ class ManterCidadeUI:
 
     def listar():
         Cidades = View.cidade_listar()
+        
         if len(Cidades) == 0: 
             st.write("Nenhuma cidade cadastrada")
-        else:    
+        else:
             dic = []
-            for obj in Cidades: dic.append(obj.__dict__)
+            for obj in Cidades:
+                dic.append(obj.to_dict())
             df = pd.DataFrame(dic)
             st.dataframe(df)
 
     def inserir():
         estados = View.estado_listar()
+        
+        dic = []
+        for obj in estados: 
+            dic.append(obj.to_dict())
 
         nome = st.text_input("Informe o nome do cidade", placeholder = st.session_state["placeholder"])
         nat = st.text_input("Informe a naturalidade da cidade")
         populacao = st.text_input("Informe a população da cidade")
-        estado = st.selectbox("Selecione o estado", estados, index = None)
+        estado = st.selectbox("Selecione o estado", dic)
 
         if st.button("Inserir"):
             if estado != None:
-                idestado = estado.get_id()
+                idestado = estado['ID']
             if nome == "":
                 st.session_state["placeholder"] = "O campo não pode estar vazio!"
                 st.error("Informe o nome")
@@ -48,32 +54,45 @@ class ManterCidadeUI:
 
     def atualizar():
         Cidades = View.cidade_listar()
+        dic = []
+        for obj in Cidades: 
+            dic.append(obj.to_dict())
+
         if len(Cidades) == 0: 
             st.write("Nenhuma cidade cadastrado")
         else:
             estados = View.estado_listar()
+            dic_e = []
+            for obj in estados: 
+                dic_e.append(obj.to_dict())
 
-            op = st.selectbox("Atualização de cidade", Cidades)
-            nome = st.text_input("Informe o novo nome da Cidade", op.get_nome())
-            nat = st.text_input("Informe a nova naturalidade da cidade", op.get_nat())
-            populacao = st.text_input("Informe a nova população", op.get_populacao())
-            estado = st.selectbox("Selecione o novo estado", estados, index = None)
+            op = st.selectbox("Atualização de cidade", dic)
+            id = op['ID']
+            nome = st.text_input("Informe o novo nome da Cidade", op['Nome'])
+            nat = st.text_input("Informe a nova naturalidade da cidade", op['Naturalidade'])
+            populacao = st.text_input("Informe a nova população", op['População'])
 
-            idestado = estado.get_id()
+            estado = st.selectbox("Selecione o novo estado", dic_e)
+            idestado = estado['ID']
+
             if st.button("Atualizar"):
-                View.cidade_atualizar(op.id, nome, nat, populacao, idestado)
+                View.cidade_atualizar(id, nome, nat, populacao, idestado)
                 st.success("Cidade atualizada com sucesso")
                 time.sleep(2)
                 st.rerun()
 
     def excluir():
         Cidades = View.cidade_listar()
+        dic = []
+        for obj in Cidades: 
+            dic.append(obj.to_dict())
+
         if len(Cidades) == 0: 
             st.write("Nenhuma cidade cadastrada")
         else:
-            op = st.selectbox("Exclusão de cidade", Cidades)
+            op = st.selectbox("Exclusão de cidade", dic)
             if st.button("Excluir"):
-                View.cidade_excluir(op.id)
+                View.cidade_excluir(op["ID"])
                 st.success("Cidade excluída com sucesso")
                 time.sleep(2)
                 st.rerun()

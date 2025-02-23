@@ -26,7 +26,7 @@ class CRUD:
     c = cls.listar_id(obj.get_id())
     if c != None:
       cls.objetos.remove(c)
-      cls.objetos.append(obj)      
+      cls.objetos.append(obj)
       cls.salvar()
 
   @classmethod

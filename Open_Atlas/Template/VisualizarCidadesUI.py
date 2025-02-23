@@ -6,10 +6,12 @@ import time
 class VisualizarCidadesUI:
     def main():
         Cidades = View.cidade_listar()
+        
         if len(Cidades) == 0: 
             st.write("Nenhuma cidade cadastrada")
-        else:    
+        else:
             dic = []
-            for obj in Cidades: dic.append(obj.__dict__)
+            for obj in Cidades:
+                dic.append(obj.to_dict())
             df = pd.DataFrame(dic)
             st.dataframe(df)

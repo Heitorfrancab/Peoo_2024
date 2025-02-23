@@ -10,6 +10,6 @@ class VisualizarEstadosUI:
             st.write("Nenhum estado cadastrado")
         else:    
             dic = []
-            for obj in Estados: dic.append(obj.__dict__)
+            for obj in Estados: dic.append(obj.to_dict())
             df = pd.DataFrame(dic)
             st.dataframe(df)

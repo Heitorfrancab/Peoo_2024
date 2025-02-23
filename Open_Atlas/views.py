@@ -57,7 +57,7 @@ class View:
         return Estados.listar_id(id)   
     def estado_atualizar(id, nome, abrev, nat, populacao, idpais):
         c = Estado(id, nome, abrev, nat, populacao, idpais)
-        Cidades.atualizar(c)
+        Estados.atualizar(c)
     def estado_excluir(id):
         c = Estado(id, "", "", "", "", "")
         Estados.excluir(c)

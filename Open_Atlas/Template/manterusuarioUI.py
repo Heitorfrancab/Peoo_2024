@@ -21,14 +21,13 @@ class ManterUsuarioUI:
         else:    
             #for obj in Usuarios: st.write(obj)
             dic = []
-            for obj in Usuarios: dic.append(obj.__dict__)
+            for obj in Usuarios: dic.append(obj.to_dict())
             df = pd.DataFrame(dic)
             st.dataframe(df)
 
     def inserir():
         nome = st.text_input("Informe o nome do Usuario", placeholder = st.session_state["placeholder"])
         email = st.text_input("Informe o e-mail")
-        fone = st.text_input("Informe o fone")
         senha = st.text_input("Informe a senha", type="password")
 
         if st.button("Inserir"):
@@ -38,35 +37,40 @@ class ManterUsuarioUI:
                 time.sleep(2)
                 st.rerun()
             else:
-                View.Usuario_inserir(nome, email, fone, senha)
+                View.usuario_inserir(email, nome, senha)
                 st.success("Usuario inserido com sucesso")
                 time.sleep(2)
                 st.rerun()
 
     def atualizar():
         Usuarios = View.usuario_listar()
+        dic = []
+        for obj in Usuarios: 
+            dic.append(obj.to_dict())
         if len(Usuarios) == 0: 
             st.write("Nenhum Usuario cadastrado")
         else:
-            op = st.selectbox("Atualização de Usuario", Usuarios)
-            nome = st.text_input("Informe o novo nome do Usuario", op.nome)
-            email = st.text_input("Informe o novo e-mail", op.email)
-            fone = st.text_input("Informe o novo fone", op.fone)
-            senha = st.text_input("Informe a nova senha", op.senha, type="password")
+            op = st.selectbox("Atualização de Usuario", dic)
+            nome = st.text_input("Informe o novo nome do Usuario", op['Nome'])
+            email = st.text_input("Informe o novo e-mail", op['Email'])
+            senha = st.text_input("Informe a nova senha", type="password")
             if st.button("Atualizar"):
-                View.Usuario_atualizar(op.id, nome, email, fone, senha)
+                View.usuario_atualizar(op['ID'], email, nome, senha)
                 st.success("Usuario atualizado com sucesso")
                 time.sleep(2)
                 st.rerun()
 
     def excluir():
-        Usuarios = View.Usuario_listar()
+        Usuarios = View.usuario_listar()
+        dic = []
+        for obj in Usuarios: 
+            dic.append(obj.to_dict())
         if len(Usuarios) == 0: 
             st.write("Nenhum Usuario cadastrado")
         else:
-            op = st.selectbox("Exclusão de Usuario", Usuarios)
+            op = st.selectbox("Exclusão de Usuario", dic)
             if st.button("Excluir"):
-                View.Usuario_excluir(op.id)
+                View.usuario_excluir(op['ID'])
                 st.success("Usuario excluído com sucesso")
                 time.sleep(2)
                 st.rerun()

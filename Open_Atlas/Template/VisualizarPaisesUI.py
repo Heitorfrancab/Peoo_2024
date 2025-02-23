@@ -10,6 +10,6 @@ class VisualizarPaisesUI:
             st.write("Nenhum país cadastrado")
         else:    
             dic = []
-            for obj in Paises: dic.append(obj.__dict__)
+            for obj in Paises: dic.append(obj.to_dict())
             df = pd.DataFrame(dic)
             st.dataframe(df)

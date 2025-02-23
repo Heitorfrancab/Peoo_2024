@@ -18,8 +18,8 @@ class Usuario:
         return self.__nome
     def get_senha(self):
         return self.__senha
-    def __dict__(self):
-        {'ID' : self.__id, 'Email' : self.__email, 'Nome' : self.__nome}
+    def to_dict(self):
+        return {'ID' : self.__id, 'Email' : self.__email, 'Nome' : self.__nome}
     def to_json(self):
         return {
             "id": self.get_id(),

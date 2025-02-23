@@ -24,8 +24,8 @@ class Estado:
         return self.__populacao
     def get_idpais(self):
         return self.__idpais
-    def __dict__(self):
-        {'ID' : self.__id, 'Nome' : self.__nome, 'Abreviação' : self.__abrev, 'Naturalidade' : self.__nat, 'População' : self.__populacao, 'ID_Pais': self.__idpais}
+    def to_dict(self):
+        return {'ID' : self.__id, 'Nome' : self.__nome, 'Abreviação' : self.__abrev, 'Naturalidade' : self.__nat, 'População' : self.__populacao, 'ID pais': self.__idpais}
 
 #Persistência
 class Estados (CRUD):
