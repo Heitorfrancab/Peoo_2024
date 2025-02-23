@@ -8,14 +8,30 @@ class ManterCidadeUI:
         if "placeholder" not in st.session_state: 
             st.session_state["placeholder"] = ""
         st.header("Cadastro de Cidades")
-        tab1, tab2, tab3, tab4 = st.tabs(["Listar", "Inserir", "Atualizar", "Excluir"])
+        tab1, tab2, tab3, tab4, tab5 = st.tabs(["Listar", "Inserir", "Atualizar", "Excluir", "População"])
         with tab1: ManterCidadeUI.listar()
         with tab2: ManterCidadeUI.inserir()
         with tab3: ManterCidadeUI.atualizar()
         with tab4: ManterCidadeUI.excluir()
+        with tab5: ManterCidadeUI.populacao()
 
     def listar():
         Cidades = View.cidade_listar()
+
+        text_search = st.text_input("Pesquisar cidades", value="")
+        
+        if st.button('Pesquisar'):
+            if text_search != "":
+                text_search = View.cidade_pesquisar(text_search)
+                if len(text_search) > 0:
+                    df2 = pd.DataFrame(text_search)
+                    st.dataframe(df2)
+                else:
+                    st.error('Nenhuma correspondência encontrada.')
+                    time.sleep(2)
+                    st.rerun()
+
+        st.divider()
         
         if len(Cidades) == 0: 
             st.write("Nenhuma cidade cadastrada")
@@ -96,3 +112,26 @@ class ManterCidadeUI:
                 st.success("Cidade excluída com sucesso")
                 time.sleep(2)
                 st.rerun()
+
+    def populacao():
+        Cidades = View.cidade_listar()
+        dic = []
+
+        for x in Cidades:
+            dic.append(x.to_dict())
+
+        st.header('Somar população de cidades')
+
+        list = []
+
+        ninputs = st.number_input('Número de cidades', step=1, min_value=1)
+        st.write('Numero de cidades ', ninputs)
+
+        for i in range(ninputs):
+            input_values = st.selectbox(f"Cidade {i}", dic)
+            list.append(input_values) 
+                
+        if st.button("Adicionar", key="button_update"):
+            df = pd.DataFrame(list)
+            st.dataframe(df)
+            st.write(f'População somada: ', View.somar_cidade(list))

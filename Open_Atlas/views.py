@@ -21,7 +21,7 @@ class View:
         Usuarios.inserir(c)
     def usuario_listar():
         return Usuarios.listar()
-    def cliente_listar_id(id):
+    def usuario_listar_id(id):
         return Usuarios.listar_id(id)   
     def usuario_atualizar(id, email, nome, senha):
         c = Usuario(id, email, nome, senha)
@@ -45,6 +45,20 @@ class View:
     def cidade_excluir(id):
         c = Cidade(id, "", "", "", "")
         Cidades.excluir(c)
+    def cidade_pesquisar(pesquisa):
+        found = []
+        pesquisa = pesquisa.upper()
+        for x in View.cidade_listar():
+            m1 = pesquisa in x.get_nome().upper()
+            if m1:
+                found.append(x.to_dict())
+        return found
+    def somar_cidade(list):
+        soma = 0
+        for x in list:
+            soma += int(x['População'])
+
+        return soma
 
 
 
@@ -61,6 +75,24 @@ class View:
     def estado_excluir(id):
         c = Estado(id, "", "", "", "", "")
         Estados.excluir(c)
+    def estado_pesquisar(pesquisa):
+        found = []
+        pesquisa = pesquisa.upper()
+        for x in View.estado_listar():
+            m1 = pesquisa in x.get_nome().upper()
+            if m1:
+                found.append(x.to_dict())
+        return found
+    def somar_estado(id, list):
+        soma = 0
+        if len(list) == 0:
+            for x in View.cidade_listar():
+                if x.get_idestado() == id:
+                    soma += int(x.get_populacao())
+        else:
+            for x in list:
+                soma += int(x['População'])
+        return soma
 
 
 
@@ -77,3 +109,21 @@ class View:
     def pais_excluir(id):
         c = Pais(id, "", "", "", "", "", "", "")
         Paises.excluir(c)
+    def pais_pesquisar(pesquisa):
+        found = []
+        pesquisa = pesquisa.upper()
+        for x in View.pais_listar():
+            m1 = pesquisa in x.get_nome().upper()
+            if m1:
+                found.append(x.to_dict())
+        return found
+    def somar_pais(id, list):
+        soma = 0
+        if len(list) == 0:
+            for x in View.estado_listar():
+                if x.get_idpais() == id:
+                    soma += int(x.get_populacao())
+        else:
+            for x in list:
+                soma += int(x['População'])
+        return soma

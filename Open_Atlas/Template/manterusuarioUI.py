@@ -51,11 +51,16 @@ class ManterUsuarioUI:
             st.write("Nenhum Usuario cadastrado")
         else:
             op = st.selectbox("Atualização de Usuario", dic)
+            id = op['ID']
             nome = st.text_input("Informe o novo nome do Usuario", op['Nome'])
             email = st.text_input("Informe o novo e-mail", op['Email'])
             senha = st.text_input("Informe a nova senha", type="password")
             if st.button("Atualizar"):
-                View.usuario_atualizar(op['ID'], email, nome, senha)
+                if senha != "":
+                    View.usuario_atualizar(id, email, nome, senha)
+                else:
+                    senha = View.usuario_listar_id(id).get_senha()
+                    View.usuario_atualizar(id, email, nome, senha)
                 st.success("Usuario atualizado com sucesso")
                 time.sleep(2)
                 st.rerun()

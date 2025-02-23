@@ -8,14 +8,31 @@ class ManterEstadoUI:
         if "placeholder" not in st.session_state: 
             st.session_state["placeholder"] = ""
         st.header("Cadastro de Estados")
-        tab1, tab2, tab3, tab4 = st.tabs(["Listar", "Inserir", "Atualizar", "Excluir"])
+        tab1, tab2, tab3, tab4, tab5 = st.tabs(["Listar", "Inserir", "Atualizar", "Excluir", "População"])
         with tab1: ManterEstadoUI.listar()
         with tab2: ManterEstadoUI.inserir()
         with tab3: ManterEstadoUI.atualizar()
         with tab4: ManterEstadoUI.excluir()
+        with tab5: ManterEstadoUI.populacao()
 
     def listar():
         Estados = View.estado_listar()
+
+        text_search = st.text_input("Pesquisar estados", value="")
+        
+        if st.button('Pesquisar'):
+            if text_search != "":
+                text_search = View.estado_pesquisar(text_search)
+                if len(text_search) > 0:
+                    df2 = pd.DataFrame(text_search)
+                    st.dataframe(df2)
+                else:
+                    st.error('Nenhuma correspondência encontrada.')
+                    time.sleep(2)
+                    st.rerun()
+
+        st.divider()
+
         if len(Estados) == 0: 
             st.write("Nenhum estado cadastrado")
         else:    
@@ -96,3 +113,36 @@ class ManterEstadoUI:
                 st.success("Estado excluída com sucesso")
                 time.sleep(2)
                 st.rerun()
+    
+    def populacao():
+        Estados = View.estado_listar()
+
+        dic = []
+        for obj in Estados:
+            dic.append(obj.to_dict())   
+
+        st.header('Somar população em um estado')
+
+        op = st.selectbox("Somar populações do Estado", dic)
+        id = op["ID"]
+        
+        if st.button('Somar'):
+            st.write(View.somar_estado(id, []))
+
+        st.divider()
+    
+        st.header('Somar população de estados')
+
+        list = []
+
+        ninputs = st.number_input('Número de estados', step=1, min_value=1)
+        st.write('Numero de estados ', ninputs)
+
+        for i in range(ninputs):
+            input_values = st.selectbox(f"Estado {i}", dic)
+            list.append(input_values) 
+                
+        if st.button("Adicionar", key="button_update"):
+            df = pd.DataFrame(list)
+            st.dataframe(df)
+            st.write(f'População somada: ', View.somar_estado('', list))
