@@ -10,14 +10,44 @@ from Template.VisualizarPaisesUI import *
 from views import *
 
 import streamlit as st
+import os
+
+root = os.getcwd()
 
 class IndexUI:
-    def menu_visitante():
+    def menu_visitante():    
+        st.sidebar.image(
+            f'{root}\Open_Atlas\Open_Atlas.svg', width=110
+        )
+        st.sidebar.markdown(
+        '''
+        <style>
+            div[data-testid="stFullScreenFrame"]{
+                display: flex;
+                justify-content: center;
+            }
+        ''',
+                unsafe_allow_html=True,
+        )
         op = st.sidebar.selectbox("Menu", ["Entrar no Sistema", "Abrir Conta"])
         if op == "Entrar no Sistema": LoginUI.main()
         if op == "Abrir Conta": AbrirContaUI.main()
                
-    def menu_admin():            
+    def menu_admin():  
+        st.sidebar.image(
+            f'{root}\Open_Atlas\Open_Atlas.svg', width=110
+        )
+        st.sidebar.markdown(
+        '''
+        <style>
+            div[data-testid="stFullScreenFrame"]{
+                display: flex;
+                justify-content: center;
+            }
+        ''',
+                unsafe_allow_html=True,
+        )   
+        st.sidebar.write("Bem-vindo(a), " + st.session_state["nome"])      
         op = st.sidebar.selectbox("Menu", ["Cadastro de Usuario", "Cadastro de Cidades", "Cadastro de Estados", "Cadastro de Paises"])
         if op == "Cadastro de Usuario": ManterUsuarioUI.main()
         if op == "Cadastro de Cidades": ManterCidadeUI.main()
@@ -25,6 +55,20 @@ class IndexUI:
         if op == "Cadastro de Paises": ManterPaisUI.main()
 
     def menu_Usuario():
+        st.sidebar.image(
+            f'{root}\Open_Atlas\Open_Atlas.svg', width=110
+        )
+        st.sidebar.markdown(
+        '''
+        <style>
+            div[data-testid="stFullScreenFrame"]{
+                display: flex;
+                justify-content: center;
+            }
+        ''',
+                unsafe_allow_html=True,
+        )
+        st.sidebar.write("Bem-vindo(a), " + st.session_state["nome"])
         op = st.sidebar.selectbox("Menu", ["Visualizar Cidades", "Visualizar Estados", "Visualizar Paises"])
         if op == "Visualizar Cidades": VisualizarCidadesUI.main()
         if op == "Visualizar Estados": VisualizarEstadosUI.main()
@@ -44,7 +88,6 @@ class IndexUI:
             # usuário está logado, verifica se é o admin
             admin = st.session_state["nome"] == "admin"
             # mensagen de bem-vindo
-            st.sidebar.write("Bem-vindo(a), " + st.session_state["nome"])
             # menu do usuário
             if admin: IndexUI.menu_admin()
             else: IndexUI.menu_Usuario()
