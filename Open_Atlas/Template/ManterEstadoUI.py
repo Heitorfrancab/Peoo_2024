@@ -121,6 +121,34 @@ class ManterEstadoUI:
         for obj in Estados:
             dic.append(obj.to_dict())   
 
+        lista_estados = {}
+        
+        for x in Estados:
+            n = x.get_nome()
+            p = int(x.get_populacao())
+            lista_estados[n] = p
+        
+        ordenada = dict(sorted(lista_estados.items(), key=lambda item: item[1], reverse=False))
+
+        chaves = ordenada.keys()
+        valores = ordenada.values()
+        valores2 = sorted(valores)
+
+        dados = {"Estados": chaves, "População": valores2}
+        
+        df = pd.DataFrame(dados).set_index("Estados")
+
+        st.title("Estados com maior população")
+
+        st.bar_chart(df, color='#f0f0f0')
+
+        for x in Estados:
+            dic.append(x.to_dict())
+
+
+        st.divider()
+
+
         st.header('Somar população em um estado')
 
         op = st.selectbox("Somar populações do Estado", dic)
@@ -139,7 +167,7 @@ class ManterEstadoUI:
         st.write('Numero de estados ', ninputs)
 
         for i in range(ninputs):
-            input_values = st.selectbox(f"Estado {i}", dic)
+            input_values = st.selectbox(f"Estado {i+1}", dic)
             list.append(input_values) 
                 
         if st.button("Adicionar", key="button_update"):

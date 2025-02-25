@@ -1,14 +1,14 @@
 [
     {
+        "id": 2,
+        "email": "heitor",
+        "nome": "Heitor Barboza",
+        "senha": "1234"
+    },
+    {
         "id": 1,
         "email": "admin",
         "nome": "admin",
         "senha": "1234"
-    },
-    {
-        "id": 2,
-        "email": "heitor",
-        "nome": "Heitor Barboza",
-        "senha": "12345"
     }
 ]

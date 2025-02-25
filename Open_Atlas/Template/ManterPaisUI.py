@@ -107,7 +107,31 @@ class ManterPaisUI:
         Paises = View.pais_listar()
         dic = []
         for obj in Paises:
-            dic.append(obj.to_dict())   
+            dic.append(obj.to_dict())  
+
+        lista_paises = {}
+        
+        for x in Paises:
+            n = x.get_nome()
+            p = int(x.get_populacao())
+            lista_paises[n] = p
+        
+        ordenada = dict(sorted(lista_paises.items(), key=lambda item: item[1], reverse=False))
+
+        chaves = ordenada.keys()
+        valores = ordenada.values()
+        valores2 = sorted(valores)
+
+        dados = {"Países": chaves, "População": valores2}
+        
+        df = pd.DataFrame(dados).set_index("Países")
+
+        st.title("Países com maior população")
+
+        st.bar_chart(df, color='#f0f0f0')
+
+        st.divider()
+
 
         st.header('Somar população em um país')
 
@@ -127,7 +151,7 @@ class ManterPaisUI:
         st.write('Numero de países ', ninputs)
 
         for i in range(ninputs):
-            input_values = st.selectbox(f"País {i}", dic)
+            input_values = st.selectbox(f"País {i+1}", dic)
             list.append(input_values) 
                 
         if st.button("Adicionar", key="button_update"):

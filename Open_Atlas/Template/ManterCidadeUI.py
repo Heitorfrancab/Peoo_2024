@@ -116,6 +116,33 @@ class ManterCidadeUI:
     def populacao():
         Cidades = View.cidade_listar()
         dic = []
+        for x in Cidades:
+            dic.append(x.to_dict())
+
+        lista_cidades = {}
+        
+        for x in Cidades:
+            n = x.get_nome()
+            p = int(x.get_populacao())
+            lista_cidades[n] = p
+        
+        ordenada = dict(sorted(lista_cidades.items(), key=lambda item: item[1], reverse=False))
+
+        chaves = ordenada.keys()
+        valores = ordenada.values()
+        valores2 = sorted(valores)
+
+        dados = {"Cidades": chaves, "População": valores2}
+        
+        df = pd.DataFrame(dados).set_index("Cidades")
+
+        st.title("Cidades com maior população")
+
+        st.bar_chart(df, color='#f0f0f0')
+
+
+
+        st.divider()
 
         for x in Cidades:
             dic.append(x.to_dict())
@@ -128,7 +155,7 @@ class ManterCidadeUI:
         st.write('Numero de cidades ', ninputs)
 
         for i in range(ninputs):
-            input_values = st.selectbox(f"Cidade {i}", dic)
+            input_values = st.selectbox(f"Cidade {i+1}", dic)
             list.append(input_values) 
                 
         if st.button("Adicionar", key="button_update"):

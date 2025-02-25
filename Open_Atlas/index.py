@@ -7,6 +7,7 @@ from Template.ManterPaisUI import *
 from Template.VisualizarCidadesUI import *
 from Template.VisualizarEstadosUI import *
 from Template.VisualizarPaisesUI import *
+from Template.EditarPerfilUI import *
 from views import *
 
 import streamlit as st
@@ -48,11 +49,12 @@ class IndexUI:
                 unsafe_allow_html=True,
         )   
         st.sidebar.write("Bem-vindo(a), " + st.session_state["nome"])      
-        op = st.sidebar.selectbox("Menu", ["Cadastro de Usuario", "Cadastro de Cidades", "Cadastro de Estados", "Cadastro de Paises"])
+        op = st.sidebar.selectbox("Menu", ["Cadastro de Usuario", "Cadastro de Cidades", "Cadastro de Estados", "Cadastro de Paises", "Editar Perfil"])
         if op == "Cadastro de Usuario": ManterUsuarioUI.main()
         if op == "Cadastro de Cidades": ManterCidadeUI.main()
         if op == "Cadastro de Estados": ManterEstadoUI.main()
         if op == "Cadastro de Paises": ManterPaisUI.main()
+        if op == "Editar Perfil": EditarPerfilUI.main()
 
     def menu_Usuario():
         st.sidebar.image(
@@ -69,10 +71,11 @@ class IndexUI:
                 unsafe_allow_html=True,
         )
         st.sidebar.write("Bem-vindo(a), " + st.session_state["nome"])
-        op = st.sidebar.selectbox("Menu", ["Visualizar Cidades", "Visualizar Estados", "Visualizar Paises"])
+        op = st.sidebar.selectbox("Menu", ["Visualizar Cidades", "Visualizar Estados", "Visualizar Paises", "Editar Perfil"])
         if op == "Visualizar Cidades": VisualizarCidadesUI.main()
         if op == "Visualizar Estados": VisualizarEstadosUI.main()
         if op == "Visualizar Paises": VisualizarPaisesUI.main()
+        if op == "Editar Perfil": EditarPerfilUI.main()
 
     def sair_do_sistema():
         if st.sidebar.button("Sair"):
